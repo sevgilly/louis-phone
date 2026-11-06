@@ -1,0 +1,92 @@
+{
+  "photos": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/72/6e/79/726e7943-4a7d-091d-3c55-1d46477cdf08/photosCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/photos/id1584215428?uo=4",
+    "publisher": "Apple"
+  },
+  "notes": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e8/53/65/e853659a-0888-7264-743e-0e3875d1505f/notesCalistoga-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/notes/id1110145109?uo=4",
+    "publisher": "Apple"
+  },
+  "camera": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/fd/d6/b2/fdd6b24d-071d-b41d-045c-b72aa99cf9fa/cameraCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/camera/id1584216193?uo=4",
+    "publisher": "Apple"
+  },
+  "phone": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a3/68/84/a36884f9-3c1d-7424-aa64-eb9523b99c33/phoneCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/phone/id1146562108?uo=4",
+    "publisher": "Apple"
+  },
+  "messages": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fc/8d/32/fc8d32a0-86a7-83d8-7045-57b4b3e71a0b/messagesCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/messages/id1146560473?uo=4",
+    "publisher": "Apple"
+  },
+  "facetime": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b1/05/6a/b1056a9b-6401-b268-31db-89e724d65054/facetimeCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/facetime/id1110145091?uo=4",
+    "publisher": "Apple"
+  },
+  "calendar": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ca/5a/cd/ca5acd85-c64d-f468-00f9-50fdc4819e59/calendarCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/calendar/id1108185179?uo=4",
+    "publisher": "Apple"
+  },
+  "mail": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6e/20/b2/6e20b217-8f80-9b20-136f-50ee09e2937c/mailCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/mail/id1108187098?uo=4",
+    "publisher": "Apple"
+  },
+  "clock": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/8e/d2/c08ed244-21b1-9bce-7199-2417712ae123/clockCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/clock/id1584215688?uo=4",
+    "publisher": "Apple"
+  },
+  "weather": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/66/d6/cf/66d6cf2c-91a7-6c10-8bd6-54b2dc7b558e/weatherCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/weather/id1069513131?uo=4",
+    "publisher": "Apple"
+  },
+  "safari": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9b/4a/12/9b4a12c2-7ea9-9e38-4d4f-f1342b310519/safariCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/safari/id1146562112?uo=4",
+    "publisher": "Apple"
+  },
+  "music": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d5/45/38/d5453893-7719-0067-ed45-1de44d0d8eb9/musicValkyrie-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/apple-music/id1108187390?uo=4",
+    "publisher": "Apple"
+  },
+  "maps": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/98/53/2e/98532ed4-879d-02f7-5021-84082f28593e/mapsCalistoga-0-0-1x_U007epad-0-1-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/apple-maps/id915056765?uo=4",
+    "publisher": "Apple"
+  },
+  "instagram": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/65/b4/b1/65b4b1e1-9891-0b84-4d9a-6370410bfbf4/Prod-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/instagram/id389801252?uo=4",
+    "publisher": "Instagram, Inc."
+  },
+  "whatsapp": {
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/15/eb/39/15eb3965-bec3-4737-950a-9d9df5303e93/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-85-220.png/512x512bb.jpg",
+    "page": "https://apps.apple.com/us/app/whatsapp-messenger/id310633997?uo=4",
+    "publisher": "WhatsApp Inc."
+  },
+  "twitter": {
+    "repository": "WalkxCode/dashboard-icons",
+    "path": "png/twitter.png",
+    "revision": "5924481afa0838ba1e24f025026860b557016727"
+  },
+  "settings": {
+    "repository": "aroundsketch/Apple-App-Icons",
+    "path": "docs/App-Icon/Apple/Settings/@PNG.png",
+    "revision": "ceb8a7e97fe43d5f61ab28838188f54c582e1923"
+  },
+  "appstore": {
+    "repository": "aroundsketch/Apple-App-Icons",
+    "path": "docs/App-Icon/Apple/AppStore/@PNG.png",
+    "revision": "2d662563e3ff05e6acbd5591cec785d3be718900"
+  }
+}
