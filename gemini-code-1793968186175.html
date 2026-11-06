@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luxury iPhone 16 Pro Max Simulator</title>
+  <style>
+    :root{
+      --bg1:#0a0d15;
+      --bg2:#141824;
+      --phone-bg:#101319;
+      --glass: rgba(255,255,255,0.08);
+      --line: rgba(255,255,255,0.14);
+      --text:#f5f7fb;
+      --muted:#9ea7bb;
+      --accent:#7ec7ff;
+      --pink:#ff8ab4;
+      --gold:#f6d487;
+      --green:#6ce3a5;
+      --purple:#b27fff;
+      --red:#ff6a6a;
+      --shadow: 0 30px 80px rgba(0,0,0,0.65);
+      --iphone-blue:#0d1a2b;
+      --faceplate:#0a0c12;
+      --dark-2:#121a22;
+      --dark-3:#19232f;
+      --card:#1f2733;
+      --nav:#111720;
+      --nav-active:#2f3b4d;
+      --white:#ffffff;
+      --slot:#2d3745;
+      --note:#ece2d0;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      height:100%;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 20% 20%, #20314d, #0d1220 40%, #070a12 100%);
+      color:var(--text);
+      overflow:hidden;
+    }
+
+    body{
+      display:grid;
+      place-items:center;
+    }
+
+    .scene{
+      width:100%;
+      height:100%;
+      display:grid;
+      place-items:center;
+      position:relative;
+      padding:28px;
+    }
+
+    .iphone{
+      position:relative;
+      width:420px;
+      height:860px;
+      border-radius:46px;
+      background: linear-gradient(145deg, #0f1117, #111821 34%, #0a0b10 100%);
+      box-shadow: var(--shadow);
+      border: 2px solid rgba(255,255,255,0.08);
+      overflow:hidden;
+    }
+
+    .bezel{
+      position:absolute;
+      inset:12px;
+      border-radius:38px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      pointer-events:none;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+
+    .screen{
+      position:absolute;
+      inset:12px;
+      border-radius:38px;
+      overflow:hidden;
+      background:#111827;
+      display:none;
+    }
+
+    .screen.active{
+      display:block;
+    }
+
+    .statusbar{
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:42px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:12px 18px 0 18px;
+      font-size:13px;
+      font-weight:600;
+      z-index:10;
+      background: rgba(0,0,0,0.05);
+    }
+
+    .statusbar .right{
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+
+    .dot{
+      width:7px;height:7px;border-radius:50%;background:#fff;display:inline-block;
+    }
+    .dot.small{width:5px;height:5px;}
+    .signal {
+      display:flex; gap:2px; align-items:flex-end;
+    }
+    .signal span{
+      width:4px; border-radius:2px;
+      background:#fff;
+      display:block;
+    }
+    .signal span:nth-child(1){height:5px}
+    .signal span:nth-child(2){height:7px}
+    .signal span:nth-child(3){height:9px}
+    .signal span:nth-child(4){height:11px}
+    .battery{
+      width:22px;height:10px;border-radius:3px;border:1.2px solid rgba(255,255,255,0.8); position:relative; display:inline-block;
+    }
+    .battery::after{
+      content:"";position:absolute;right:-2px;top:2px;width:2px;height:6px;background: rgba(255,255,255,0.8); border-radius:1px;
+    }
+    .battery::before{
+      content:""; position:absolute; inset:1px 1px 1px 1px; background:linear-gradient(90deg,#fff,#d8f7d4); border-radius:2px;
+    }
+
+    .lock-screen{
+      background:
+        linear-gradient(180deg, rgba(10,11,17,0.22), rgba(4,6,13,0.5)),
+        radial-gradient(circle at 50% 20%, rgba(143,195,255,0.38), transparent 25%),
+        linear-gradient(180deg, #111827 0%, #080b12 100%);
+    }
+
+    .lock-wallpaper{
+      position:absolute; inset:0; background:
+        radial-gradient(circle at 32% 30%, rgba(160,182,252,0.45), transparent 20%),
+        radial-gradient(circle at 70% 22%, rgba(128,159,255,0.4), transparent 24%),
+        linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.4));
+    }
+
+    .lock-wrapper{
+      position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding:90px 26px 26px;
+      z-index:2;
+    }
+
+    .time{
+      font-size:70px; font-weight:300; letter-spacing:-2px; margin:0;
+      text-shadow:0 3px 10px rgba(0,0,0,0.45);
+    }
+
+    .date{
+      font-size:17px; color: rgba(255,255,255,0.7); letter-spacing:0.1em; text-transform:uppercase; margin-top:6px;
+    }
+
+    .notif{
+      background: rgba(17, 21, 26, 0.82);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:18px;
+      padding:12px 14px;
+      display:flex; align-items:center; gap:10px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .notif .mini-icon{
+      width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#ff9ab0,#fe5e76); display:grid; place-items:center; font-size:20px; font-weight:700;
+    }
+
+    .notif .text{
+      flex:1; min-width:0;
+    }
+
+    .notif .title{
+      font-size:12px; color:#a9b4c8; margin-bottom:2px;
+    }
+
+    .notif .message{
+      font-size:17px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+
+    .unlock{
+      align-self:center;
+      padding:12px 24px;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.2);
+      color:#fff;
+      border-radius:999px;
+      font-weight:700;
+      letter-spacing:0.08em;
+      cursor:pointer;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 12px 30px rgba(0,0,0,0.2);
+    }
+
+    .home{
+      background:
+        linear-gradient(180deg, rgba(17, 18, 24, 0.64), rgba(0,0,0,0.2)),
+        radial-gradient(circle at 20% 15%, rgba(160,182,252,0.15), transparent 25%),
+        linear-gradient(180deg, #0e1218 0%, #0d1219 100%);
+    }
+
+    .home-inner{
+      position:absolute; inset:0; padding:15px 14px 86px;
+      display:flex; flex-direction:column;
+      gap:10px;
+    }
+
+    .wallpaper-gradient{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(153,177,255,0.08), rgba(0,0,0,0.15)),
+        radial-gradient(circle at 15% 18%, rgba(188, 221, 255, 0.18), transparent 18%),
+        radial-gradient(circle at 75% 25%, rgba(171, 144, 255, 0.12), transparent 17%);
+      pointer-events:none;
+    }
+
+    .app-grid{
+      position:relative; z-index:2;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px 8px;
+      margin-top: 18px;
+    }
+
+    .app{
+      display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer;
+      user-select:none;
+      color:var(--white);
+      font-size:11px; font-weight:600;
+      text-shadow:0 2px 10px rgba(0,0,0,0.4);
+    }
+
+    .app .icon{
+      width:56px;height:56px;border-radius:18px; position:relative;
+      display:grid; place-items:center; box-shadow: inset 0 1px 1px rgba(255,255,255,0.18), 0 8px 14px rgba(0,0,0,0.18);
+      font-size:22px;
+    }
+
+    .app-label{
+      max-width:56px; text-align:center; line-height:1.1; color:rgba(255,255,255,0.9);
+    }
+
+    .app.instagram .icon{background:linear-gradient(135deg,#ff9b7a,#a348ff,#ff4d94)}
+    .app.messages .icon{background:linear-gradient(135deg,#7fe0ff,#2342ff)}
+    .app.mail .icon{background:linear-gradient(135deg,#f4d28a,#d38d32)}
+    .app.music .icon{background:linear-gradient(135deg,#ff6b88,#e0d8ff)}
+    .app.notes .icon{background:linear-gradient(135deg,#f7d480,#f3a64f)}
+    .app.calendar .icon{background:linear-gradient(135deg,#9ef0d9,#4ec9a9)}
+    .app.contacts .icon{background:linear-gradient(135deg,#d7d9ed,#6d79e6)}
+    .app.whatsapp .icon{background:linear-gradient(135deg,#7ce0a7,#2ebd59)}
+    .app.camera .icon{background:linear-gradient(135deg,#dfe3ea,#707c94)}
+    .app.settings .icon{background:linear-gradient(135deg,#c7cbd8,#7682a6)}
+    .app.stock .icon{background:linear-gradient(135deg,#d0f4ff,#68a5ff)}
+    .app.appstore .icon{background:linear-gradient(135deg,#ff7d79,#ff4d7a)}
+    .app.nike .icon{background:linear-gradient(135deg,#eef1f8,#5f6e91)}
+    .app.banking .icon{background:linear-gradient(135deg,#efc9f8,#ab7cff)}
+
+    .dock{
+      position:absolute; left:12px; right:12px; bottom:12px; height:72px;
+      background: rgba(17, 20, 28, 0.76);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:26px;
+      display:flex; align-items:center; justify-content:space-around; padding:0 10px;
+      backdrop-filter: blur(10px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      z-index:4;
+    }
+
+    .dock .app .icon{
+      width:46px;height:46px;border-radius:15px;
+      font-size:20px;
+    }
+
+    .dock .app-label{
+      display:none;
+    }
+
+    .app-screen{
+      background: linear-gradient(180deg,#0f1320,#101827 12%, #0d121a 100%);
+      display:none;
+    }
+    .app-screen.active{display:block}
+
+    .app-shell{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column;
+    }
+
+    .app-header{
+      position:relative; z-index:2;
+      height:80px;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:28px 18px 14px 18px;
+      background: rgba(12,17,22,0.7);
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(10px);
+    }
+
+    .header-left, .header-right{
+      display:flex; align-items:center; gap:10px;
+      min-width:64px;
+    }
+
+    .header-title{
+      font-size:18px; font-weight:700; letter-spacing:-0.02em;
+      flex:1; text-align:center;
+    }
+
+    .app-body{
+      position:relative; flex:1; overflow:auto; padding:12px 14px 28px;
+    }
+
+    .back-btn{
+      border:none; border-radius:999px; padding:8px 12px; font-weight:700; background: rgba(255,255,255,0.08); color:#fff; cursor:pointer;
+    }
+
+    .icon-btn{
+      width:32px;height:32px;border-radius:50%; background: rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.09); display:grid; place-items:center; cursor:pointer; color:#fff;
+    }
+
+    .app-body::-webkit-scrollbar{ width:0; height:0; }
+
+    .tabbar{
+      position:absolute; left:12px; right:12px; bottom:12px; height:58px;
+      border-radius:20px; background: rgba(9, 12, 18, 0.85);
+      border:1px solid rgba(255,255,255,0.08);
+      display:flex; align-items:center; justify-content:space-around; padding:0 8px;
+      backdrop-filter: blur(10px);
+    }
+    .tab{
+      width:44px; height:44px; display:grid; place-items:center; border-radius:14px; cursor:pointer; font-size:21px; color: rgba(255,255,255,0.7);
+    }
+    .tab.active{
+      background: rgba(255,255,255,0.08); color:#fff;
+    }
+
+    .section{
+      margin-top:16px;
+    }
+
+    .label{
+      font-size:12px; font-weight:700; color: var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin:0 0 10px 2px;
+    }
+
+    .story-row{
+      display:flex; gap:10px; overflow:auto; padding-bottom:6px;
+    }
+    .story{
+      display:flex; flex-direction:column; align-items:center; gap:6px; min-width:64px; color: var(--text);
+      font-size:11px; font-weight:600;
+    }
+    .story .ring{
+      width:66px; height:66px; border-radius:50%;
+      background: linear-gradient(135deg,#f8d874,#ff8b7c,#bf7cff,#5ec0ff); padding:2px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.16);
+    }
+    .story .ring-inner{
+      width:100%; height:100%; border-radius:50%; background:#161d25; display:grid; place-items:center; font-size:20px;
+      border:2px solid rgba(10,15,20,0.7);
+    }
+
+    .post-card{
+      margin-top:12px;
+      background: rgba(25,31,40,0.65); border:1px solid rgba(255,255,255,0.05); border-radius:18px; overflow:hidden;
+    }
+
+    .post-header{
+      height:48px; display:flex; align-items:center; justify-content:space-between; padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+    .post-user{
+      display:flex; align-items:center; gap:10px; font-weight:700;
+    }
+    .avatar{
+      width:28px; height:28px; border-radius:50%; display:grid; place-items:center; font-size:14px; font-weight:800; background:linear-gradient(135deg,#d6b4ff,#8ec5ff);
+      color:#0d1220;
+    }
+    .post-image{
+      height:260px; background: linear-gradient(135deg,#c9d6ff,#7ba7fa,#f8d9b7); position:relative;
+      overflow:hidden;
+    }
+    .post-image::before{
+      content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.32));
+    }
+    .law-card{
+      position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:24px;
+      background:
+        radial-gradient(circle at center, rgba(254,254,255,0.18), transparent 25%),
+        linear-gradient(135deg, rgba(27,32,40,0.2), rgba(21,28,39,0.7));
+    }
+    .law-graphic{
+      width:76%; max-width:260px; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); border-radius:20px; backdrop-filter: blur(6px);
+      padding:16px 14px; text-align:left;
+    }
+    .law-graphic .title{
+      font-size:20px; font-weight:800; letter-spacing:-0.05em; margin-bottom:8px;
+    }
+    .law-graphic .small{
+      font-size:12px; color: rgba(255,255,255,0.66); line-height:1.5;
+    }
+    .law-graphic .bars{
+      margin-top:14px; display:flex; align-items:flex-end; gap:8px; height:52px;
+    }
+    .law-graphic .bars span{
+      flex:1; border-radius:8px 8px 0 0; background: linear-gradient(180deg,#d5b7fa,#8ec5ff);
+      display:block;
+    }
+    .law-graphic .bars span:nth-child(1){height:44%}
+    .law-graphic .bars span:nth-child(2){height:60%}
+    .law-graphic .bars span:nth-child(3){height:72%}
+    .law-graphic .bars span:nth-child(4){height:82%}
+    .law-graphic .bars span:nth-child(5){height:96%}
+
+    .post-body{
+      padding:10px 12px 14px;
+    }
+    .post-meta{
+      display:flex; align-items:center; gap:10px; font-weight:700; color:#dfe5f0; margin-bottom:4px;
+    }
+    .post-text{
+      color:rgba(255,255,255,0.9); line-height:1.4; font-size:14px; margin-top:7px;
+    }
+
+    .profile-shell{
+      padding-bottom: 14px;
+    }
+    .profile-top{
+      display:flex; align-items:center; gap:16px; padding:8px 4px 16px;
+    }
+    .profile-photo{
+      width:82px;height:82px;border-radius:50%; background: linear-gradient(135deg,#ffe0a3,#b58ad8,#80d8ff); display:grid;place-items:center; font-size:28px; font-weight:800; color:#1b1a22;
+      border:3px solid rgba(255,255,255,0.15);
+    }
+    .profile-info{
+      flex:1;
+    }
+    .profile-name-line{
+      display:flex; align-items:center; justify-content:space-between; gap:8px;
+      margin-bottom:6px;
+    }
+    .profile-name{
+      font-size:18px;font-weight:700;
+    }
+    .profile-stats{
+      display:flex; justify-content:space-between; gap:10px; margin-top:10px;
+      font-size:12px; color:#dfe6f0;
+    }
+    .profile-stats strong{
+      display:block; font-size:16px; margin-bottom:2px; font-weight:800;
+    }
+
+    .profile-actions{
+      display:flex; gap:8px; margin-top:8px;
+    }
+    .pill{
+      flex:1; border-radius:10px; padding:10px 12px; background: rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.09); font-weight:700; cursor:pointer; color:var(--white); text-align:center;
+    }
+    .pill.primary{ background: linear-gradient(135deg,#f5d17d,#fff0c7); color:#171921; border-color: rgba(255,255,255,0.1); }
+    .pill.message{ background: rgba(255,255,255,0.09); }
+
+    .highlights{
+      display:flex; gap:12px; overflow:auto; padding-bottom:8px; margin-top:16px;
+    }
+    .highlight{
+      min-width:66px; text-align:center; font-size:10px; color:#dfe5f0;
+    }
+    .highlight .cover{
+      width:64px;height:64px;border-radius:50%; background: linear-gradient(135deg,#f8d787,#c9aad9,#78c9ff); display:grid;place-items:center; font-weight:800; color:#161b2a; border:2px solid rgba(255,255,255,0.12);
+    }
+
+    .grid-posts{
+      display:grid; grid-template-columns: repeat(3, 1fr); gap:4px; margin-top:16px;
+    }
+    .grid-post{
+      aspect-ratio:1; border-radius:8px; background: linear-gradient(135deg,#bfd8ff,#d5d8ff,#f4d7f3);
+      position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.05);
+    }
+    .grid-post:nth-child(2n){ background: linear-gradient(135deg,#c4f0d3,#8dc5ff,#d7d6ff);}
+    .grid-post:nth-child(3n){ background: linear-gradient(135deg,#f9d5ba,#f7b2d8,#9cc7ff);}
+    .grid-post::before{
+      content:""; position:absolute; inset:0; background:linear-gradient(180deg, transparent, rgba(0,0,0,0.2));
+    }
+
+    .search-panel{
+      position:relative; margin-top:10px; background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:10px 12px; color:var(--text); font-weight:600;
+    }
+    .search-panel .bar{
+      display:flex; align-items:center; gap:8px;
+    }
+    .mini-search{
+      width:10px;height:10px;border:2px solid rgba(255,255,255,0.8); border-radius:50%; position:relative; display:inline-block;
+    }
+    .mini-search::after{
+      content:""; position:absolute; width:5px; height:2px; background: rgba(255,255,255,0.8); right:-4px; bottom:-2px; transform:rotate(38deg); border-radius:3px;
+    }
+    .search-behavior{
+      padding:6px 0 0 24px; color:#b8c1d8; font-size:12px;
+    }
+
+    .dm-list{
+      display:flex; flex-direction:column; gap:10px;
+      margin-top:8px;
+    }
+    .dm-item{
+      display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:10px 12px;
+    }
+    .dm-item .avatar{
+      width:42px; height:42px; border-radius:50%; background: linear-gradient(135deg,#edc1ff,#7bd4ff); color:#17212b; font-size:16px; font-weight:800;
+    }
+    .dm-item .meta{
+      flex:1; display:flex; flex-direction:column; gap:2px;
+    }
+    .dm-item .meta .name{font-weight:700;}
+    .dm-item .meta .sub{font-size:12px; color:#aab7cc;}
+
+    .messages-layout{
+      display:grid; grid-template-columns: 118px 1fr; gap:12px; min-height:720px;
+    }
+    .sidebar{
+      background: rgba(22, 26, 32, 0.9); border-radius:18px; padding:10px 8px; border:1px solid rgba(255,255,255,0.04);
+    }
+    .chat-item{
+      padding:10px 8px; border-radius:12px; display:flex; align-items:center; gap:8px; cursor:pointer; margin-bottom:6px;
+      border:1px solid transparent; color:#dfe6f6;
+    }
+    .chat-item.active{
+      background: rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.06);
+    }
+    .chat-item .tiny{
+      width:28px;height:28px;border-radius:50%; display:grid;place-items:center; font-size:11px; font-weight:800; background:linear-gradient(135deg,#d8d8ff,#9ae0ff); color:#14202c;
+    }
+    .chat-main{
+      background: rgba(16, 22, 31, 0.85); border-radius:18px; border:1px solid rgba(255,255,255,0.04); overflow:hidden;
+    }
+    .chat-header{
+      height:62px; display:flex; align-items:center; justify-content:space-between; padding:0 14px; border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+    .chat-name{
+      display:flex; align-items:center; gap:10px; font-weight:700;
+    }
+    .chat-body{
+      padding:14px 12px; display:flex; flex-direction:column; gap:10px; background: linear-gradient(180deg, rgba(18,24,32,0.95), rgba(12,19,26,0.95));
+    }
+    .bubble{
+      max-width:75%; padding:10px 12px; border-radius:14px; font-size:14px; line-height:1.4; color:#f4f7fb;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+    .bubble.incoming{
+      align-self:flex-start; background: rgba(255,255,255,0.06);
+    }
+    .bubble.outgoing{
+      align-self:flex-end; background: linear-gradient(135deg,#1f8cff,#4ac0ff); border-color: rgba(255,255,255,0.08);
+    }
+    .bubble strong{color:#fff;}
+
+    .mail-list{
+      display:flex; flex-direction:column; gap:10px;
+      margin-top:10px;
+    }
+    .mail-item{
+      background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:12px 12px; display:flex; gap:12px;
+    }
+    .mail-item .tag{
+      width:38px;height:38px;border-radius:12px; display:grid;place-items:center; font-weight:800; background:linear-gradient(135deg,#d5d7ff,#9bcfff); color:#1a1d29; font-size:12px;
+    }
+    .mail-item .copy{flex:1}
+    .mail-item .from{font-weight:800; margin-bottom:2px}
+    .mail-item .subject{font-size:14px; margin-bottom:4px; color:#fff; font-weight:700}
+    .mail-item .snippet{font-size:12px; color:#b3bfd2}
+    .mail-item .date{font-size:11px; color:#aab7cc; align-self:flex-start; padding-top:8px}
+
+    .contacts-list{
+      display:flex; flex-direction:column; gap:10px;
+      margin-top:10px;
+    }
+    .contact-item{
+      display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:10px 12px;
+    }
+    .contact-item .avatar{
+      width:38px;height:38px; border-radius:50%; background: linear-gradient(135deg,#d5dbe9,#8ca0ff); color:#161d2c; font-size:16px; font-weight:800; display:grid;place-items:center;
+    }
+    .contact-info{flex:1}
+    .contact-action{
+      width:34px;height:34px;border-radius:50%; background: rgba(255,255,255,0.08); display:grid;place-items:center; cursor:pointer;
+    }
+
+    .notes-list{
+      display:flex; flex-direction:column; gap:10px;
+      margin-top:10px;
+    }
+    .note-item{
+      background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:12px 12px; display:flex; align-items:center; gap:10px; cursor:pointer;
+    }
+    .note-icon{
+      width:38px;height:38px;border-radius:12px; background: linear-gradient(135deg,#d6d3cc,#ccaa72); display:grid;place-items:center; color:#221d16; font-weight:800;
+    }
+    .note-copy{flex:1}
+    .note-title{font-weight:800; margin-bottom:3px}
+    .note-sub{font-size:12px; color:#afb9c8}
+
+    .music-layout{
+      display:flex; flex-direction:column; gap:12px;
+    }
+    .cover-card{
+      height:220px; border-radius:24px; background: linear-gradient(135deg,#112037,#304e7a,#a56bd7); position:relative; overflow:hidden; border:1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 14px 24px rgba(0,0,0,0.2);
+    }
+    .cover-card::before{
+      content:""; position:absolute; inset:0; background:radial-gradient(circle at 60% 18%, rgba(255,255,255,0.18), transparent 20%), linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+    }
+    .album-info{
+      position:absolute; inset:auto 18px 18px 18px; display:flex; justify-content:space-between; align-items:flex-end;
+    }
+    .album-name{ font-size:28px; font-weight:800; letter-spacing:-0.06em; }
+    .album-meta{ font-size:12px; color:rgba(255,255,255,0.76); }
+    .music-list{
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .song{
+      background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:14px; padding:10px 12px; display:flex; align-items:center; gap:10px;
+    }
+    .song-art{
+      width:42px;height:42px;border-radius:12px; background: linear-gradient(135deg,#ffc6d7,#8ec7ff,#f8d680); display:grid;place-items:center; color:#1d1d2a; font-size:18px; font-weight:800;
+    }
+    .song-info{flex:1}
+    .song-title{font-weight:800}
+    .song-sub{font-size:12px;color:#afbdd1}
+
+    .calendar-box{
+      background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:12px; margin-top:8px;
+    }
+    .calendar-header{
+      display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-weight:700;
+    }
+    .calendar-grid{
+      display:grid; grid-template-columns: repeat(7, 1fr); gap:6px; font-size:11px; color:#b9c2d1; text-align:center;
+    }
+    .day{
+      display:grid; place-items:center; height:30px; border-radius:10px; background: rgba(255,255,255,0.02);
+    }
+    .day.today{ background:linear-gradient(135deg,#9fdcff,#6eb1ff); color:#0d1321; font-weight:800; }
+    .day.event{ background: rgba(255,255,255,0.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05); }
+    .calendar-list{
+      display:flex; flex-direction:column; gap:8px; margin-top:12px;
+    }
+    .event-pill{
+      background: rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.04); border-radius:12px; padding:10px 12px; display:flex; justify-content:space-between; align-items:center; font-size:13px;
+    }
+    .event-pill strong{ font-size:13px; }
+
+    .hidden{display:none !important}
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="iphone">
+      <div class="bezel"></div>
+
+      <div id="lockScreen" class="screen lock-screen active">
+        <div class="lock-wallpaper"></div>
+        <div class="statusbar">
+          <div>9:41</div>
+          <div class="right">
+            <div class="signal">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="wifi">◔</div>
+            <div class="battery"></div>
+          </div>
+        </div>
+
+        <div class="lock-wrapper">
+          <div>
+            <div class="time">9:41</div>
+            <div class="date">Thursday, Nov 6</div>
+          </div>
+
+          <div class="notif" aria-label="Instagram notification">
+            <div class="mini-icon">◎</div>
+            <div class="text">
+              <div class="title">Instagram</div>
+              <div class="message">100+ people liked your story</div>
+            </div>
+          </div>
+
+          <button class="unlock" id="unlockBtn">UNLOCK</button>
+        </div>
+      </div>
+
+      <div id="homeScreen" class="screen home">
+        <div class="statusbar">
+          <div>9:41</div>
+          <div class="right">
+            <div class="signal">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="wifi">◔</div>
+            <div class="battery"></div>
+          </div>
+        </div>
+
+        <div class="home-inner">
+          <div class="wallpaper-gradient"></div>
+
+          <div class="app-grid" id="appGrid">
+            <div class="app instagram" data-app="instagram">
+              <div class="icon">◎</div>
+              <div class="app-label">Instagram</div>
+            </div>
+            <div class="app messages" data-app="messages">
+              <div class="icon">✉</div>
+              <div class="app-label">Messages</div>
+            </div>
+            <div class="app mail" data-app="mail">
+              <div class="icon">✉</div>
+              <div class="app-label">Mail</div>
+            </div>
+            <div class="app music" data-app="music">
+              <div class="icon">♫</div>
+              <div class="app-label">Music</div>
+            </div>
+            <div class="app notes" data-app="notes">
+              <div class="icon">✎</div>
+              <div class="app-label">Notes</div>
+            </div>
+            <div class="app calendar" data-app="calendar">
+              <div class="icon">◫</div>
+              <div class="app-label">Calendar</div>
+            </div>
+            <div class="app contacts" data-app="contacts">
+              <div class="icon">☰</div>
+              <div class="app-label">Contacts</div>
+            </div>
+            <div class="app whatsapp" data-app="whatsapp">
+              <div class="icon">◍</div>
+              <div class="app-label">WhatsApp</div>
+            </div>
+            <div class="app camera" data-app="camera">
+              <div class="icon">◉</div>
+              <div class="app-label">Camera</div>
+            </div>
+            <div class="app settings" data-app="settings">
+              <div class="icon">⚙</div>
+              <div class="app-label">Settings</div>
+            </div>
+            <div class="app stock" data-app="stock">
+              <div class="icon">▣</div>
+              <div class="app-label">Stocks</div>
+            </div>
+            <div class="app appstore" data-app="appstore">
+              <div class="icon">A</div>
+              <div class="app-label">App Store</div>
+            </div>
+            <div class="app nike" data-app="nike">
+              <div class="icon">N</div>
+              <div class="app-label">Nike</div>
+            </div>
+            <div class="app banking" data-app="banking">
+              <div class="icon">$</div>
+              <div class="app-label">Bank</div>
+            </div>
+          </div>
+
+          <div class="dock" id="dock">
+            <div class="app messages" data-app="messages"><div class="icon">✉</div></div>
+            <div class="app mail" data-app="mail"><div class="icon">✉</div></div>
+            <div class="app music" data-app="music"><div class="icon">♫</div></div>
+            <div class="app notes" data-app="notes"><div class="icon">✎</div></div>
+            <div class="app whatsapp" data-app="whatsapp"><div class="icon">◍</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="appScreen" class="screen app-screen">
+        <div class="app-shell">
+          <div class="app-header">
+            <div class="header-left">
+              <button class="back-btn" id="backHome">Home</button>
+            </div>
+            <div class="header-title" id="appTitle">App</div>
+            <div class="header-right">
+              <div class="icon-btn" id="miniAction">⋯</div>
+            </div>
+          </div>
+          <div class="app-body" id="appBody"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const appScreen = document.getElementById('appScreen');
+    const appBody = document.getElementById('appBody');
+    const appTitle = document.getElementById('appTitle');
+    const lockScreen = document.getElementById('lockScreen');
+    const homeScreen = document.getElementById('homeScreen');
+
+    const state = {
+      currentApp: '',
+      instagramAccount: 'LouisT',
+      whatsappChat: 'Law Faculty',
+      whatsappIndex: 0,
+      notePassword: 'louis2025'
+    };
+
+    const instagramData = {
+      LouisT: {
+        user: 'LouisT',
+        name: 'Lou',
+        followers: '10.5k',
+        following: '200',
+        bio: 'Future corporate counsel • Quiet luxury • legal strategy',
+        highlights: [
+          { title: 'Law', icon: 'L' },
+          { title: 'Vibe', icon: 'V' },
+          { title: 'On the move', icon: 'M' }
+        ],
+        posts: [
+          {
+            user: 'LouisT',
+            caption: 'Legal precision and presence. The strongest arguments are built before the room is entered.',
+            type: 'law'
+          },
+          {
+            user: 'LouisT',
+            caption: 'A calm mind is a sharper legal mind. No noise, only structure.',
+            type: 'law'
+          },
+          {
+            user: 'LouisT',
+            caption: 'Luxury is restraint. Law is clarity. Both win the room.',
+            type: 'law'
+          }
+        ],
+        profileStats: { posts: '214', followers: '10.5k', following: '200' }
+      },
+      Loumiere: {
+        user: 'Loumiere',
+        name: 'LouArt🎀🪽',
+        followers: '2',
+        following: '2',
+        bio: 'Private notes • soft chaos • little rituals',
+        highlights: [
+          { title: 'us', icon: 'U' },
+          { title: 'chaos', icon: 'C' },
+          { title: 'late nights', icon: 'N' }
+        ],
+        posts: [
+          {
+            user: 'Loumiere',
+            caption: 'Private moodboard. Silence, stillness, and all the little details that feel like home.',
+            type: 'priv'
+          },
+          {
+            user: 'Loumiere',
+            caption: 'Not everything is meant to be public. Some moments are just for us.',
+            type: 'priv'
+          },
+          {
+            user: 'Loumiere',
+            caption: 'A little chaos, a little tenderness, a very soft place to land.',
+            type: 'priv'
+          }
+        ],
+        profileStats: { posts: '18', followers: '2', following: '2' }
+      }
+    };
+
+    const whatsappChats = [
+      {
+        name: 'Law Faculty',
+        preview: 'Professor: We’ll revise the precedent list tonight.',
+        messages: [
+          {from:'me', text:'Morning, everyone. I’ve uploaded the case summaries for the hearing prep.'},
+          {from:'group', text:'Professor: Please review the doctrine files before tomorrow’s seminar.'}
+        ]
+      },
+      {
+        name: 'Zee<3',
+        preview: 'Let’s meet up later tonight.',
+        messages: [
+          {from:'them', text:'Are you done with the constitutional readings yet?'},
+          {from:'me', text:'Almost. Just sorting out the final case notes.'},
+          {from:'them', text:'Take a break soon. Let’s grab coffee.'}
+        ]
+      },
+      {
+        name: 'Zee<3 & NiNi',
+        preview: 'NiNi: The reservation is locked in.',
+        messages: [
+          {from:'them', text:'NiNi: Are we still on for the gallery opening this weekend?'},
+          {from:'them', text:'Zee<3: Yes, absolutely. Louis is handling the schedule.'},
+          {from:'me', text:'Everything is set. Count me in.'}
+        ]
+      }
+    ];
+
+    document.getElementById('unlockBtn').addEventListener('click', () => {
+      lockScreen.classList.remove('active');
+      homeScreen.classList.add('active');
+    });
+
+    document.querySelectorAll('.app').forEach(el => {
+      el.addEventListener('click', () => {
+        const appName = el.getAttribute('data-app');
+        openApp(appName);
+      });
+    });
+
+    document.getElementById('backHome').addEventListener('click', () => {
+      appScreen.classList.remove('active');
+      homeScreen.classList.add('active');
+    });
+
+    function openApp(name) {
+      state.currentApp = name;
+      homeScreen.classList.remove('active');
+      appScreen.classList.add('active');
+      appTitle.textContent = name.toUpperCase();
+      renderAppContent(name);
+    }
+
+    function renderAppContent(name) {
+      if (name === 'instagram') renderInstagram();
+      else if (name === 'messages') renderMessages();
+      else if (name === 'mail') renderMail();
+      else if (name === 'music') renderMusic();
+      else if (name === 'notes') renderNotes();
+      else if (name === 'calendar') renderCalendar();
+      else if (name === 'contacts') renderContacts();
+      else if (name === 'whatsapp') renderWhatsApp();
+      else {
+        appBody.innerHTML = `<div style="text-align:center;padding:40px;color:#9ea7bb;">Application ready and loaded.</div>`;
+      }
+    }
+
+    function renderInstagram() {
+      const data = instagramData[state.instagramAccount];
+      appBody.innerHTML = `
+        <div class="profile-shell">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-weight:800;font-size:16px;">${data.user}</span>
+            <button class="pill" id="switchAccBtn" style="padding:4px 10px;font-size:11px;">Switch Account (${state.instagramAccount === 'LouisT' ? 'Loumiere' : 'LouisT'})</button>
+          </div>
+          <div class="profile-top">
+            <div class="profile-photo">${data.name[0]}</div>
+            <div class="profile-info">
+              <div class="profile-name-line">
+                <span class="profile-name">${data.name}</span>
+              </div>
+              <div class="profile-stats">
+                <div><strong>${data.profileStats.posts}</strong>posts</div>
+                <div><strong>${data.profileStats.followers}</strong>followers</div>
+                <div><strong>${data.profileStats.following}</strong>following</div>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:13px;color:#dbe2ef;margin-bottom:8px;">${data.bio}</div>
+          <div class="highlights">
+            ${data.highlights.map(h => `
+              <div class="highlight">
+                <div class="cover">${h.icon}</div>
+                <div style="margin-top:4px;">${h.title}</div>
+              </div>
+            `).join('')}
+          </div>
+          <div class="search-panel" id="exploreSearch">
+            <div class="bar">
+              <div class="mini-search"></div>
+              <span>Explore / Search HStyles</span>
+            </div>
+            <div class="search-behavior">Tap here to view HStyles (3.2k followers, not following back)</div>
+          </div>
+          <div class="grid-posts">
+            ${data.posts.map(() => `<div class="grid-post"></div>`).join('')}
+          </div>
+        </div>
+      `;
+
+      document.getElementById('switchAccBtn').addEventListener('click', () => {
+        state.instagramAccount = state.instagramAccount === 'LouisT' ? 'Loumiere' : 'LouisT';
+        renderInstagram();
+      });
+
+      document.getElementById('exploreSearch').addEventListener('click', () => {
+        alert('HStyles Profile: 3.2k followers. No mutual follows.');
+      });
+    }
+
+    function renderMessages() {
+      appBody.innerHTML = `
+        <div class="messages-layout">
+          <div class="sidebar">
+            <div class="chat-item active"><div class="tiny">CC</div><strong>Amex</strong></div>
+            <div class="chat-item"><div class="tiny">HS</div><strong>HSBC</strong></div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-header">
+              <div class="chat-name">Amex Platinum Alert</div>
+            </div>
+            <div class="chat-body" style="height:600px;overflow:auto;">
+              <div class="bubble incoming"><strong>AMEX Notification:</strong> €14,800 charge approved at Custom Tailoring Atelier, Milan.</div>
+              <div class="bubble incoming"><strong>AMEX Notification:</strong> €45,000 charge approved at Fine Art Gallery & Antiquities.</div>
+              <div class="bubble incoming"><strong>AMEX Notification:</strong> €3,200 charge approved at Hermès Flagship Boutique.</div>
+              <div class="bubble incoming"><strong>AMEX Notification:</strong> €8,900 charge approved at Private Jet Charter Services.</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderMail() {
+      appBody.innerHTML = `
+        <div class="label">Inbox - Priority Banking & Luxury</div>
+        <div class="mail-list">
+          <div class="mail-item">
+            <div class="tag">AX</div>
+            <div class="copy">
+              <div class="from">Amex Private Concierge</div>
+              <div class="subject">Your Centurion wire transfer processed (€45,000)</div>
+              <div class="snippet">The transfer to Fine Art Gallery has been fully cleared and verified...</div>
+            </div>
+            <div class="date">9:12 AM</div>
+          </div>
+          <div class="mail-item">
+            <div class="tag">HS</div>
+            <div class="copy">
+              <div class="from">HSBC Private Bank</div>
+              <div class="subject">Bespoke Portfolio Quarterly Review</div>
+              <div class="snippet">Your private wealth advisor has updated your asset allocation report...</div>
+            </div>
+            <div class="date">Yesterday</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderMusic() {
+      appBody.innerHTML = `
+        <div class="music-layout">
+          <div class="cover-card">
+            <div class="album-info">
+              <div>
+                <div class="album-meta">Recently Played • Heavy Rotation</div>
+                <div class="album-name">Quiet Luxury & Nocturnes</div>
+              </div>
+            </div>
+          </div>
+          <div class="label">Favorites & Artists</div>
+          <div class="music-list">
+            <div class="song"><div class="song-art">AM</div><div class="song-info"><div class="song-title">Arctic Monkeys</div><div class="song-sub">Do I Wanna Know? / R U Mine?</div></div></div>
+            <div class="song"><div class="song-art">LR</div><div class="song-info"><div class="song-title">Lana Del Rey</div><div class="song-sub">Born to Die / Ultraviolence</div></div></div>
+            <div class="song"><div class="song-art">SG</div><div class="song-info"><div class="song-title">Selena Gomez</div><div class="song-sub">Revival / Lose You to Love Me</div></div></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderNotes() {
+      appBody.innerHTML = `
+        <div class="label">Protected Notes (Locked)</div>
+        <div class="notes-list">
+          <div class="note-item" onclick="alert('Note 1: Case summaries, corporate litigation precedents, and contract clauses.')">
+            <div class="note-icon">🔒</div>
+            <div class="note-copy">
+              <div class="note-title">Case Summaries & Legal Precedents</div>
+              <div class="note-sub">Protected by password</div>
+            </div>
+          </div>
+          <div class="note-item" onclick="alert('Note 2: To Be Considered / Plans - Strict action items and timeline.')">
+            <div class="note-icon">🔒</div>
+            <div class="note-copy">
+              <div class="note-title">To Be Considered / Plans</div>
+              <div class="note-sub">Protected by password</div>
+            </div>
+          </div>
+          <div class="note-item" onclick="alert('Note 3: Personal secret note and private reflections.')">
+            <div class="note-icon">🔒</div>
+            <div class="note-copy">
+              <div class="note-title">Private Confidential Note</div>
+              <div class="note-sub">Protected by password</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCalendar() {
+      appBody.innerHTML = `
+        <div class="label">November 2026 Schedule</div>
+        <div class="calendar-box">
+          <div class="calendar-header"><span>November</span><span>Law & Appointments</span></div>
+          <div class="calendar-grid">
+            <div class="day">Mo</div><div class="day">Tu</div><div class="day">We</div><div class="day">Th</div><div class="day">Fr</div><div class="day">Sa</div><div class="day">Su</div>
+            <div class="day">1</div><div class="day">2</div><div class="day">3</div><div class="day">4</div><div class="day">5</div><div class="day today">6</div><div class="day event">7</div>
+            <div class="day event">8</div><div class="day">9</div><div class="day event">10</div><div class="day event">11</div><div class="day event">12</div><div class="day">13</div><div class="day">14</div>
+          </div>
+        </div>
+        <div class="calendar-list">
+          <div class="event-pill"><strong>Corporate Law Lecture</strong><span>09:30 AM</span></div>
+          <div class="event-pill"><strong>Doctor's Appointment</strong><span>02:15 PM</span></div>
+          <div class="event-pill"><strong>Final Exam Preparation</strong><span>Next Week</span></div>
+        </div>
+      `;
+    }
+
+    function renderContacts() {
+      appBody.innerHTML = `
+        <div class="label">VIP & Legal Counsel</div>
+        <div class="contacts-list">
+          <div class="contact-item"><div class="avatar">LF</div><div class="contact-info"><strong>Sterling & Partners Law</strong><div style="font-size:12px;color:#aab7cc;">Corporate Counsel</div></div></div>
+          <div class="contact-item"><div class="avatar">Z</div><div class="contact-info"><strong>Zee<3</strong><div style="font-size:12px;color:#aab7cc;">Close Circle</div></div></div>
+          <div class="contact-item"><div class="avatar">N</div><div class="contact-info"><strong>NiNi</strong><div style="font-size:12px;color:#aab7cc;">Close Circle</div></div></div>
+          <div class="contact-item"><div class="avatar">D</div><div class="contact-info"><strong>Dad</strong><div style="font-size:12px;color:#aab7cc;">Family VIP</div></div></div>
+        </div>
+      `;
+    }
+
+    function renderWhatsApp() {
+      appBody.innerHTML = `
+        <div class="label">WhatsApp Chats</div>
+        <div class="dm-list">
+          ${whatsappChats.map((c, i) => `
+            <div class="dm-item" style="cursor:pointer;" onclick="openChatDetail(${i})">
+              <div class="avatar">${c.name[0]}</div>
+              <div class="meta">
+                <div class="name">${c.name}</div>
+                <div class="sub">${c.preview}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    window.openChatDetail = function(index) {
+      const chat = whatsappChats[index];
+      appBody.innerHTML = `
+        <button class="back-btn" onclick="renderWhatsApp()" style="margin-bottom:10px;">← Back to Chats</button>
+        <div class="chat-main" style="border-radius:14px;overflow:hidden;">
+          <div class="chat-header"><div class="chat-name">${chat.name}</div></div>
+          <div class="chat-body" style="height:520px;overflow:auto;">
+            ${chat.messages.map(m => `
+              <div class="bubble ${m.from === 'me' ? 'outgoing' : 'incoming'}">${m.text}</div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+  </script>
+</body>
+</html>
